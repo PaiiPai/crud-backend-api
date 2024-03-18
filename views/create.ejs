@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon | Create a new pokemon</title>
+</head>
+<body>
+    <form method="POST">
+        <label for="name">Pokemon:</label>
+        <input type="text" name="name" id="name">
+        <br>
+        <label for="type">Type:</label>
+        <select name="type" id="type">
+            <option value="fire">Fire</option>
+            <option value="water">Water</option>
+            <option value="leaf">Leaf</option>
+            <option value="electric">Electric</option>
+            <option value="normal">Normal</option>
+            <option value="fighting">Fighting</option>
+            <option value="ghost">Ghost</option>
+            <option value="psychic">Psychic</option>
+            <option value="rock">Rock</option>
+        </select>
+        <br>
+        <label for="ability">Ability:</label>
+        <input type="text" name="ability" id="ability">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.querySelector('form');
+        const url = location.href;
+
+        function addPokemon(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const type = document.getElementById("type").value;
+            const ability = document.getElementById("ability").value;
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, type, ability }),
+            })
+            .then(res => location.href = '')
+            .catch(e => console.log(e));
+        }
+
+        form.addEventListener("submit", addPokemon);
+    </script>
+</body>
+</html>
