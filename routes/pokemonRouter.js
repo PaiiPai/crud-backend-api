@@ -1,5 +1,5 @@
-const { Router } = require("express");
-pokemonRouter = Router();
+const pokemonRouter = require("express").Router();
+
 const {
   pokemonGet,
   pokemonCreateGet,
