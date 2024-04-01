@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon | Edit your pokemon</title>
+</head>
+
+<body>
+    <form method="POST">
+        <label for="name">Pokemon:</label>
+        <input type="text" name="name" id="name" value="<%= name %>">
+        <br>
+        <label for="type">Type:</label>
+        <select name="type" id="type">
+            <% var options = 
+            [ 
+                "fire", 
+                "water", 
+                "grass", 
+                "electric", 
+                "normal", 
+                "fighting", 
+                "ghost", 
+                "psychic", 
+                "rock", 
+            ];
+            for (let i = 0; i < options.length; i++ ) { 
+                var selected = type === options[i] ? "selected" : ""; %>
+                <option value="<%= options[i] %>" <%= selected %>>
+                    <%= options[i] %>
+                </option>
+            <% } %>
+        </select>
+        
+        <br>
+        <label for="ability">Ability:</label>
+        <input type="text" name="ability" id="ability" value="<%= ability %>">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.querySelector('form');
+        const url = location.href;
+
+        function addPokemon(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const type = document.getElementById("type").value;
+            const ability = document.getElementById("ability").value;
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, type, ability }),
+            })
+                .then(res => location.href = '')
+                .catch(e => console.log(e));
+        }
+
+        form.addEventListener("submit", addPokemon);
+    </script>
+</body>
+
+</html>
