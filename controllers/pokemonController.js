@@ -49,11 +49,21 @@ const pokemonEditGet = async (req, res) => {
       message: error,
     });
   }
-}
+};
 
-const pokemonEditPost = (req, res) => {
-
-}
+const pokemonEditPost = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const response = await Pokemon.findByIdAndUpdate(id, req.body, { new: true }) 
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: `${error}`,
+    });
+  }
+};
 
 module.exports = {
   pokemonGet,
